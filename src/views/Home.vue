@@ -1,18 +1,20 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
-  </div>
+  <v-container>
+    <v-row class="mx-auto" justify="center">
+      <v-col cols="auto">{{ helloWorld }}</v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
+import { defineComponent, ref } from "@vue/composition-api";
 
-export default Vue.extend({
+export default defineComponent({
   name: "Home",
-  components: {
-    HelloWorld,
+  setup() {
+    return {
+      helloWorld: ref("Hello world"),
+    };
   },
 });
 </script>
