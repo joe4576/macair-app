@@ -1,5 +1,7 @@
 <template>
   <v-app>
+    <mac-nav-drawer v-model="drawer" />
+    <mac-app-bar @toggle="drawer = !drawer" />
     <v-main>
       <router-view />
     </v-main>
@@ -7,9 +9,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/composition-api";
+import { defineComponent, ref } from "@vue/composition-api";
+import MacNavDrawer from "@/components/controls/app/MacNavDrawer.vue";
+import MacAppBar from "@/components/controls/app/MacAppBar.vue";
 
 export default defineComponent({
   name: "App",
+  components: {
+    MacNavDrawer,
+    MacAppBar,
+  },
+  setup() {
+    return {
+      drawer: ref<boolean | null>(null),
+    };
+  },
 });
 </script>
