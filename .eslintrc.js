@@ -21,5 +21,8 @@ module.exports = {
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "vue/script-setup-uses-vars": "off",
     "no-var": "error",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "no-debugger": "off",
   },
 };
