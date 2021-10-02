@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    <mac-nav-drawer v-model="drawer" />
     <mac-app-bar @toggle="drawer = !drawer" />
     <v-main>
       <router-view />

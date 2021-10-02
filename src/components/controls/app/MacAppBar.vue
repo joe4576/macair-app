@@ -4,7 +4,6 @@
     class="cyan lighten-4"
     app
   >
-    <v-app-bar-nav-icon class="text-no-wrap" @click="toggleMenu" />
     <router-link to="/">
       <v-app-bar-title><div>MacAir Web App</div></v-app-bar-title>
     </router-link>

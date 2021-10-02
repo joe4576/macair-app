@@ -22,6 +22,7 @@
 import { defineComponent } from "@vue/composition-api";
 import { menuItems } from "@/router/index";
 
+// Component not currently used, but keep for future use
 export default defineComponent({
   name: "MacNavDrawer",
   props: {
