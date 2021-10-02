@@ -25,6 +25,8 @@
           :items="aircraftSummaries"
           :headers="headers"
           disable-pagination
+          :item-class="isRented"
+          @click:row="openAirportLink"
         />
       </v-col>
     </v-row>
@@ -56,7 +58,7 @@ interface AircraftSummary {
   Registration: string;
   Location: string;
   RentedBy: string;
-  PctFuel: string;
+  CurrentFuel: string;
   MaxPax: string;
   MaxFuel: string;
   MaxLoad: string;
@@ -80,17 +82,29 @@ export default defineComponent({
       { text: "Registration", value: "Registration" },
       { text: "Location", value: "Location" },
       { text: "Rented By", value: "RentedBy" },
-      { text: "Fuel Percentage", value: "PctFuel" },
+      { text: "Current Fuel (gal)", value: "CurrentFuel" },
       { text: "Max Pax", value: "MaxPax" },
-      { text: "Max Fuel", value: "MaxFuel" },
-      { text: "Max Load", value: "MaxLoad" },
+      { text: "Max Fuel (gal)", value: "MaxFuel" },
+      { text: "Max Load (kg)", value: "MaxLoad" },
       { text: "Available Pax", value: "AvailablePax" },
-      { text: "Available Cargo", value: "AvailableCargo" },
+      { text: "Available Cargo (kg)", value: "AvailableCargo" },
     ]);
 
     onMounted(async () => {
       await refresh();
     });
+
+    const isRented = (item: AircraftSummary) => {
+      if (item.RentedBy !== "Not rented.") {
+        return "background-color: cyan";
+      }
+    };
+
+    const openAirportLink = (item: AircraftSummary) => {
+      window.open(
+        `https://server.fseconomy.net/airport.jsp?icao=${item.Location}`
+      );
+    };
 
     const refresh = async (manualRefresh = false) => {
       loading.value = true;
@@ -219,6 +233,11 @@ export default defineComponent({
           ).toString();
         };
 
+        const getCurrentFuel = (makeModel: string, pctFuel: string) => {
+          const maxFuel = getMaxFuel(makeModel);
+          return Math.round(+maxFuel * +pctFuel).toString();
+        };
+
         aircraftSummaries.value = aircrafts.value
           .filter((aircraft) => aircraft.MakeModel)
           .map((aircraft) => {
@@ -227,7 +246,7 @@ export default defineComponent({
               Registration: aircraft.Registration,
               Location: aircraft.Location,
               RentedBy: aircraft.RentedBy,
-              PctFuel: aircraft.PctFuel,
+              CurrentFuel: getCurrentFuel(aircraft.MakeModel, aircraft.PctFuel),
               MaxPax: getMaxPax(aircraft.MakeModel),
               MaxFuel: getMaxFuel(aircraft.MakeModel),
               MaxLoad: getMaxLoad(aircraft.MakeModel),
@@ -260,6 +279,8 @@ export default defineComponent({
       error,
       snackbarText,
       loading,
+      isRented,
+      openAirportLink,
     };
   },
 });
