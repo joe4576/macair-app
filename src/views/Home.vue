@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row class="pt-2">
       <v-col cols="auto" align-self="center" class="red--text">
         <span v-if="error">
           Error: too many request sent in the last 60 seconds (max 10). Please
@@ -32,10 +32,18 @@
     <v-snackbar
       v-model="showRefreshSnackbar"
       :timeout="2000"
-      color="red darken-2"
+      :color="error ? 'red darken-2' : 'blue-grey darken-1'"
     >
       {{ snackbarText }}
     </v-snackbar>
+    <v-dialog v-model="loading" hide-overlay persistent width="300">
+      <v-card color="primary" dark>
+        <v-card-text>
+          Fetching data...
+          <v-progress-linear indeterminate color="white" class="mb-0" />
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -66,6 +74,7 @@ export default defineComponent({
     const showRefreshSnackbar = ref(false);
     const error = ref(false);
     const snackbarText = ref<string>("");
+    const loading = ref(false);
 
     const headers = ref([
       { text: "Make/model", value: "MakeModel" },
@@ -85,6 +94,7 @@ export default defineComponent({
     });
 
     const refresh = async (manualRefresh = false) => {
+      loading.value = true;
       const aircraftByKeyUrl = `https://server.fseconomy.net/data?userkey=${process.env.VUE_APP_USER_KEY}&format=csv&query=aircraft&search=key&readaccesskey=${process.env.VUE_APP_READ_ACCESS_KEY}`;
       const aircraftConfigUrl = `	https://server.fseconomy.net/data?userkey=${process.env.VUE_APP_USER_KEY}&format=csv&query=aircraft&search=configs`;
 
@@ -240,6 +250,7 @@ export default defineComponent({
           : (snackbarText.value = "Data refreshed successfully");
         showRefreshSnackbar.value = true;
       }
+      loading.value = false;
     };
 
     return {
@@ -249,6 +260,7 @@ export default defineComponent({
       showRefreshSnackbar,
       error,
       snackbarText,
+      loading,
     };
   },
 });
