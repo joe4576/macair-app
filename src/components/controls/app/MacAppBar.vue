@@ -4,9 +4,9 @@
     class="cyan lighten-4"
     app
   >
-    <v-app-bar-nav-icon @click="toggleMenu" />
+    <v-app-bar-nav-icon class="text-no-wrap" @click="toggleMenu" />
     <router-link to="/">
-      <v-app-bar-title>MacAir</v-app-bar-title>
+      <v-app-bar-title><div>MacAir Web App</div></v-app-bar-title>
     </router-link>
     <v-spacer />
     <a href="https://server.fseconomy.net/index.jsp" target="_blank">

@@ -1,30 +1,3 @@
-export interface AircraftByKey {
-  AirframeTime: string;
-  Bonus: string;
-  EngineTime: string;
-  Equipment: string;
-  FeeOwed: string;
-  Home: string;
-  LeasedFrom: string;
-  Location: string;
-  LocationName: string;
-  MakeModel: string;
-  MonthlyFee: string;
-  NeedsRepair: string;
-  Owner: string;
-  PctFuel: string;
-  Registration: string;
-  RentalDry: string;
-  RentalTime: string;
-  RentalType: string;
-  RentalWet: string;
-  RentedBy: string;
-  SalePrice: string;
-  SellbackPrice: string;
-  SerialNumber: string;
-  TimeLast100hr: string;
-}
-
 export function csvToJson(csv: string) {
   const lines = csv.split("\n").filter((line) => (line ? line : null));
   const headers = lines[0].substring(0, lines[0].length - 1).split(",");
