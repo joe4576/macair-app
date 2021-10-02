@@ -24,7 +24,6 @@
         <v-data-table
           :items="aircraftSummaries"
           :headers="headers"
-          item-key="SerialNumber"
           disable-pagination
         />
       </v-col>
